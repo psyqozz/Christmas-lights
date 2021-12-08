@@ -9,12 +9,9 @@ class SimpleCiTest extends KernelTestCase
 {
     public function testSomething()
     {
-        self::bootKernel();
-
         $light = new Light();
         $light->setPositionX(150);
 
         $this->assertEquals(150, $light->getPositionX());
-
     }
 }
