@@ -37,6 +37,13 @@ class Light
         return $this->id;
     }
 
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     public function getPositionX(): ?string
     {
         return $this->postion_x;
