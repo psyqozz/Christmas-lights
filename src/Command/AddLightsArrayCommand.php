@@ -26,7 +26,8 @@ class AddLightsArrayCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fileSystem = new Filesystem();
-        $content = "X Y Active \n";
+        $content = "X Y Active";
+        $fileSystem->appendToFile('lightsDb.txt', $content);
 
         echo "writing of the current file... please wait \n";
 
@@ -35,10 +36,10 @@ class AddLightsArrayCommand extends Command
                 $light = new Light();
                 $light->setPositionX($x);
                 $light->setPositionY($y);
-                $light->setIsActive(false);
+                $light->setIsActive(0);
 
                 $isActive = $light->getIsActive() == false ? "0" : "1";
-                $content .= $light->getPositionX()." ".$light->getPositionY()." ".$isActive."\n";
+                $content  = "\n".$light->getPositionX()." ".$light->getPositionY()." ".$isActive;
                 $fileSystem->appendToFile('lightsDb.txt', $content);
             }
         }

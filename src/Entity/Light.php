@@ -28,7 +28,7 @@ class Light
     private $position_y;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="int")
      */
     private $isActive;
 
@@ -68,12 +68,12 @@ class Light
         return $this;
     }
 
-    public function getIsActive(): ?bool
+    public function getIsActive(): ?int
     {
         return $this->isActive;
     }
 
-    public function setIsActive(bool $isActive): self
+    public function setIsActive(int $isActive): self
     {
         $this->isActive = $isActive;
 
