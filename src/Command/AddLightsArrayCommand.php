@@ -7,10 +7,6 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class AddLightsArrayCommand extends Command
 {
@@ -29,10 +25,8 @@ class AddLightsArrayCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
         $fileSystem = new Filesystem();
+        $content = "X Y Active \n";
 
         echo "writing of the current file... please wait \n";
 
@@ -43,12 +37,13 @@ class AddLightsArrayCommand extends Command
                 $light->setPositionY($y);
                 $light->setIsActive(false);
 
-                $jsonContent = $serializer->serialize($light, 'json');
-                $fileSystem->appendToFile('lightsDb.txt', $jsonContent);
+                $isActive = $light->getIsActive() == false ? "0" : "1";
+                $content .= $light->getPositionX()." ".$light->getPositionY()." ".$isActive."\n";
+                $fileSystem->appendToFile('lightsDb.txt', $content);
             }
         }
 
-        Echo "File successful created";
+        Echo "File successful created\n";
         return Command::SUCCESS;
     }
 }

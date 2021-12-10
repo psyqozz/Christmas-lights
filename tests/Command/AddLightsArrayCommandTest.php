@@ -14,24 +14,22 @@ class AddLightsArrayCommandTest extends KernelTestCase
 {
     public function testSomething()
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-
-        $serializer = new Serializer($normalizers, $encoders);
         $fileSystem = new Filesystem();
+        $content = "X Y Active \n";
 
         $light = new Light();
         $light->setPositionX(230);
         $light->setPositionY(600);
         $light->setIsActive(false);
-        $jsonContent = $serializer->serialize($light, 'json');
-        $fileSystem->appendToFile('lightsDbTest.txt', $jsonContent);
+
+        $isActive = $light->getIsActive() == false ? "0" : "1";
+        $content .= $light->getPositionX()." ".$light->getPositionY()." ".$isActive."\n";
+        $fileSystem->appendToFile('lightsDbTest.txt', $content);
 
         $this->assertFileExists('lightsDbTest.txt',    'File doest exist');
         $this->assertStringNotEqualsFile('lightsDbTest.txt', '');
 
         $fileSystem->remove('lightsDbTest.txt');
-
 
     }
 }
