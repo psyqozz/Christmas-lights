@@ -37,6 +37,11 @@ class Light
      */
     private $typeLight;
 
+    /**
+     * @ORM\Column(type="int")
+     */
+    private $brightness;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,6 +98,18 @@ class Light
     public function setTypeLight(string $typeLight): self
     {
         $this->typeLight = $typeLight;
+
+        return $this;
+    }
+
+    public function getBrightness(): ?int
+    {
+        return $this->brightness;
+    }
+
+    public function setBrightness(int $brightness): self
+    {
+        $this->brightness = $brightness;
 
         return $this;
     }
