@@ -6,12 +6,11 @@ use App\Entity\Light;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 class UpdateLightsCommand extends Command
 {
     // the name of the command (the part after "bin/console")
-    protected static $defaultName = 'app:show-lights';
+    protected static $defaultName = 'app:update-lights';
 
     protected function configure(): void
     {
@@ -29,7 +28,7 @@ class UpdateLightsCommand extends Command
         [
             'on' =>
             [
-                ['887','9','959','629',],
+                ['887','9','959','629'],
                 ['454','398','844','448'],
                 ['351','678','951','908']
             ],
@@ -76,7 +75,8 @@ class UpdateLightsCommand extends Command
                 if(($light->getPositionX() > $position_x_min && $light->getPositionX() < $position_x_max) || ($light->getPositionX() == $position_x_min && $light->getPositionY() >= $position_y_min) || ($light->getPositionX() == $position_x_max && $light->getPositionY() <= $position_y_max)){
                     $active = $type == "on" ? 1 : 0;
                     $active = $type == 'toggle' ? $inverse : $active;
-                    $content = $light->getPositionX()." ".$light->getPositionY()." ".$active."\n";
+                    $light->setTypeLight($type);
+                    $content = $light->getPositionX()." ".$light->getPositionY() ." ". $active ." ".$light->getTypeLight()."\n";
                 }
             }
         }

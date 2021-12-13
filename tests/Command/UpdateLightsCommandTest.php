@@ -4,7 +4,6 @@ namespace App\Tests\Command;
 
 use App\Entity\Light;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Filesystem\Filesystem;
 
 class UpdateLightsCommandTest extends KernelTestCase
 {
@@ -14,7 +13,7 @@ class UpdateLightsCommandTest extends KernelTestCase
         [
             'on' =>
             [
-                ['2','3','3','8',],
+                ['2','3','3','8'],
                 ['5','3','7','2'],
                 ['8','8','9','6']
             ]
@@ -48,7 +47,8 @@ class UpdateLightsCommandTest extends KernelTestCase
             if(($light->getPositionX() > $position_x_min && $light->getPositionX() < $position_x_max) || ($light->getPositionX() == $position_x_min && $light->getPositionY() >= $position_y_min) || ($light->getPositionX() == $position_x_max && $light->getPositionY() <= $position_y_max)){
                 $active = $type == "on" ? 1 : 0;
                 $active = $type == 'toggle' ? $inverse : $active;
-                $content = $light->getPositionX() . " " . $light->getPositionY() . " " . $active . "\n";
+                $light->setTypeLight($type);
+                $content = $light->getPositionX()." ".$light->getPositionY() ." ". $active ." ".$light->getTypeLight()."\n";
             }
         }
         return $content;

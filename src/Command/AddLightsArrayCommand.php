@@ -10,7 +10,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class AddLightsArrayCommand extends Command
 {
-
     // the name of the command (the part after "bin/console")
     protected static $defaultName = 'app:add-lights-array';
 
@@ -26,7 +25,10 @@ class AddLightsArrayCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $fileSystem = new Filesystem();
-        $content = "X Y Active";
+        if($fileSystem->exists('lightsDbTest.txt')){
+            $fileSystem->remove('lightsDbTest.txt');
+        }
+        $content = "X Y Active Type";
         $fileSystem->appendToFile('lightsDb.txt', $content);
 
         echo "writing of the current file... please wait \n";
@@ -37,9 +39,10 @@ class AddLightsArrayCommand extends Command
                 $light->setPositionX($x);
                 $light->setPositionY($y);
                 $light->setIsActive(0);
-
+                $light->setTypeLight('off');
                 $isActive = $light->getIsActive() == false ? "0" : "1";
-                $content  = "\n".$light->getPositionX()." ".$light->getPositionY()." ".$isActive;
+
+                $content  = "\n".$light->getPositionX()." ".$light->getPositionY()." ".$isActive." ".$light->getTypeLight();
                 $fileSystem->appendToFile('lightsDb.txt', $content);
             }
         }

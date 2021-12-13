@@ -15,7 +15,7 @@ class AddLightsArrayCommandTest extends KernelTestCase
             $fileSystem->remove('lightsDbTest.txt');
         }
 
-        $content = "X Y Active";
+        $content = "X Y Active Type";
         $fileSystem->appendToFile('lightsDbTest.txt', $content);
 
         for($x = 0; $x <= 10; $x++){
@@ -24,8 +24,10 @@ class AddLightsArrayCommandTest extends KernelTestCase
                 $light->setPositionX($x);
                 $light->setPositionY($y);
                 $light->setIsActive(false);
+                $light->setTypeLight('off');
                 $isActive = $light->getIsActive() == false ? "0" : "1";
-                $content = "\n".$light->getPositionX()." ".$light->getPositionY()." ".$isActive;
+
+                $content = "\n".$light->getPositionX()." ".$light->getPositionY()." ".$isActive." ".$light->getTypeLight();
                 $fileSystem->appendToFile('lightsDbTest.txt', $content);
             }
         }

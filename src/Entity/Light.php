@@ -32,6 +32,11 @@ class Light
      */
     private $isActive;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $typeLight;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +81,18 @@ class Light
     public function setIsActive(int $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getTypeLight(): ?string
+    {
+        return $this->typeLight;
+    }
+
+    public function setTypeLight(string $typeLight): self
+    {
+        $this->typeLight = $typeLight;
 
         return $this;
     }
